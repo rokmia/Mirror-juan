@@ -1,14 +1,14 @@
 # ─────────────────────────────────────────────────────────────────────────────────────────────────────── #
 # Token of the personal Discord account that will mirror messages.                                        #
 # Learn how to find your account token here: https://www.androidauthority.com/get-discord-token-3149920/  #
-token: "NDgwMjU3MDYyNDk3MDI2MDQ4.Gdac1w.r1Qg90yCbvcoI3R-wXxDt-PYN4tdq9YLWMVgkI"                                                                           #
+token: "insert_your_token_here"                                                                           #
 # ─────────────────────────────────────────────────────────────────────────────────────────────────────── #
 
 # ─────────────────────────────────────────────────────────────────────────────────────────────────────── #
 # Status of the account that will mirror messages.                                                        #
 # Available options: "online", "invisible", "idle", "dnd".                                                #
 # NOTE: You must be logged out for this option to take effect.                                            #
-status: "invisible"                                                                                          #
+status: "online"                                                                                          #
 # ─────────────────────────────────────────────────────────────────────────────────────────────────────── #
 
 # ─────────────────────────────────────────────────────────────────────────────────────────────────────── #
@@ -19,15 +19,21 @@ logMessage: "[%date%] Mirrored @%author%'s message from %server% #%channel%."   
 
 mirrors:
    1:
-      # Jnoob──────────────────────────────────────────────────────────────────────────────────────────── #
+      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
       # Channel IDs to mirror.                                                                            #
+      # You can find the ID of a channel by enabling the Developer mode in your                           #
+      # Discord account settings, then Right-Click -> Copy ID on a channel.                               #
+      # NOTE: You can also mirror categories and forums.                                                  #
       channelIds:                                                                                         #
-         - "1094507359960842260"                                                             #
+         - "insert_channel_id_to_mirror_here"                                                             #
       # ───────────────────────────────────────────────────────────────────────────────────────────────── #
 
       # ───────────────────────────────────────────────────────────────────────────────────────────────── #
+      # Webhooks are used to send mirrored messages to specific channels.                                 #
+      # You can create a webhook for a channel with:                                                      #
+      # Edit channel -> Integrations -> Webhooks -> New webook.                                           #
       webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338659729131438151/i-5Tf-WzX0JCQnsYaSD5QwnABQxnb6ckuTC_oGI_3u2-lD0hOGaR89Xg0FxvMK4PIibO"                                                          #
+         - "insert_destination_webhook_url_here"                                                          #
       # ───────────────────────────────────────────────────────────────────────────────────────────────── #
 
       # ───────────────────────────────────────────────────────────────────────────────────────────────── #
@@ -41,578 +47,60 @@ mirrors:
       # ───────────────────────────────────────────────────────────────────────────────────────────────── #
       # Options that define how messages are mirrored.                                                    #
       options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
+         useWebhookProfile: false # Whether to use the custom webhook profile.                            #
          removeAttachments: false # Whether to remove attachments before mirroring.                       #
          mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
          mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
+         mirrorMessagesOnEdit: false # Whether to mirror messages when they are edited.                   #
       # ───────────────────────────────────────────────────────────────────────────────────────────────── #
 
       # ───────────────────────────────────────────────────────────────────────────────────────────────── #
+      # Replacements to perform before mirroring a message.                                               #
+      #                                                                                                   #
+      # The where: option is used to specify which part of a message should be replaced.                  #
+      # Available options:                                                                                #
+      # "everywhere", "message_content", "embed_author", "embed_author_url", "embed_author_icon_url",     #
+      # "embed_title", "embed_description", "embed_url", "embed_field_name", "embed_field_value",         #
+      # "embed_image_url", "embed_thumbnail_url", "embed_footer", "embed_footer_icon_url", "embed_color". #
       replacements:                                                                                       #
          1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
+            replace: "insert_text_to_replace_here"                                                        #
+            with: "insert_replaced_text_here"                                                             #
             where: "everywhere"                                                                           #
+      # To replace mentions of @roles, @users or #channels, you have to replace their IDs. For example:   #
+      #  2:                                                                                               #
+      #     replace: "insert_role_id_to_replace_here"                                                     #
+      #     with: "insert_replaced_role_id_here"                                                          #
+      #     where: "everywhere"                                                                           #
+      # To replace everything with a specific text, you can use the wildcard (*). For example:            #
+      #  3:                                                                                               #
+      #     replace: "*"                                                                                  #
+      #     with: "this_text_will_replace_everything"                                                     #
+      #     where: "everywhere"                                                                           #
       # ───────────────────────────────────────────────────────────────────────────────────────────────── #
 
       # ───────────────────────────────────────────────────────────────────────────────────────────────── #
+      # Filters allows you to only mirror messages that meet certain criteria.                            #
+      #                                                                                                   #
+      # The type: option is used to specify the type of filter. Available options:                        #
+      # - "whitelist": only mirror messages that contain at least one of the keywords.                    #
+      # - "blacklist": only mirror messages that do not contain any of the keywords.                      #
+      #                                                                                                   #
+      # The where: option is used to specify where the filter should be applied.                          #
+      # Available options: "message", "post_tag", "username", "guild_nickname", "user_roles".             #
+      #                                                                                                   #
+      # NOTE: Filters are applied in the order they are defined. If a message                             #
+      # matches a filter, it will not be checked against the others below.                                #
       filters:                                                                                            #
          1:                                                                                               #
             type: "blacklist"                                                                             #
             keywords:                                                                                     #
                - "insert_keyword_here"                                                                    #
             where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   2:
-      # MLS────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1244026297664012288"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338662698455662604/jz6fmNX8XYGubUcOeVuc7eu9KFBzcYN--D7EhRBqvV3Wuu0sfmgz7E5b9d54miT60tWD"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   3:
-      # evasivelight───────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1231996492336857139"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338663050978529291/E3-jahDlFWn8c0xARZwoRCB1_fG2IrqSjYofBSXyMLLuBeXCn3WQdpRmtLG6mzOdp6TU"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   4:
-      # beastbets-pp───────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1326230716895334410"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338663617989705778/f3WgPs9rfJbMdZuR5DwgHJPhfyAKLDK4mftFKVLNp5QATtUpdZ8o7iJp2Db14liSqMA2"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   5:
-      # beastbets-ud───────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1326231212448284683"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338663617989705778/f3WgPs9rfJbMdZuR5DwgHJPhfyAKLDK4mftFKVLNp5QATtUpdZ8o7iJp2Db14liSqMA2"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   6:
-      # beastbets-books───────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1326231498642292786"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338663617989705778/f3WgPs9rfJbMdZuR5DwgHJPhfyAKLDK4mftFKVLNp5QATtUpdZ8o7iJp2Db14liSqMA2"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   7:
-      # MOJO-tennins───────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1136383871710138368"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338709521043951716/eDXoIFgUj735P99sWnLWbolFlQY1EiIyCH-MsEvliwVVw22-_BvS6xQtdfWf90Ja63m5"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   8:
-      # ndot───────────────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1096462586414907413"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338709931041488948/hzVeFvQlkktuCDhH6oG-_aYPnDtnqRgG3roEktqI7jdYp8eI9byXV9fBVRx7HC6DCA6A"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   9:
-      # meno───────────────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1325945330298261586"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338710331870150718/sDH4aTuLBTEgpWujuxj92B5KJZHuMJsnLw9cP8FqU1XARY0hUIZuIBP9gkdjGr3RXdED"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   10:
-      # RICO───────────────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1204859196038848512"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338710753292583014/kRgwf10qdPA3X8dKPmNXyKX3Y1vrIIY9tA7h5RJcuVZu3MryQ5ESMR7JKwAWgqmP7TTY"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   11:
-      # tal-pp─────────────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1270222899277598794"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338711051289755719/QWDpStuSlLuGV4gGLqOs-6046LQkJ3Iojk7Xjlh3sGOeYne6FF-1g51UGOszYAp5kzlB"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   11:
-      # tal─────────────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1297409504316751882"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338711051289755719/QWDpStuSlLuGV4gGLqOs-6046LQkJ3Iojk7Xjlh3sGOeYne6FF-1g51UGOszYAp5kzlB"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-   12:
-      # sandbox─────────────────────────────────────────────────────────────────────────────────────────── #
-      # Channel IDs to mirror.                                                                            #
-      channelIds:                                                                                         #
-         - "1338711579515944981"                                                             #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      webhookUrls:                                                                                        #
-         - "https://discord.com/api/webhooks/1338711733895823371/Y2QXVoAseEQ7MXYThGmAEMSy2X06bEJ92QVryV4a6oc4yikKeduhXLmoXaWGgjyOsg-r"                                                          #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Requirements that a message must meet to be mirrored.                                             #
-      requirements:                                                                                       #
-         minEmbedsCount: 0                                                                                #
-         minContentLength: 0                                                                              #
-         minAttachmentsCount: 0                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      # Options that define how messages are mirrored.                                                    #
-      options:                                                                                            #
-         useWebhookProfile: true # Whether to use the custom webhook profile.                            #
-         removeAttachments: false # Whether to remove attachments before mirroring.                       #
-         mirrorMessagesFromBots: true # Whether to mirror messages coming from bots.                      #
-         mirrorReplyMessages: true # Whether to mirror messages that are replies to other messages.       #
-         mirrorMessagesOnEdit: true # Whether to mirror messages when they are edited.                   #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      replacements:                                                                                       #
-         1:                                                                                               #
-            replace: "*"                                                        						  #
-            with: "@Member"                                                             				  #
-            where: "everywhere"                                                                           #
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-
-      # ───────────────────────────────────────────────────────────────────────────────────────────────── #
-      filters:                                                                                            #
-         1:                                                                                               #
-            type: "blacklist"                                                                             #
-            keywords:                                                                                     #
-               - "insert_keyword_here"                                                                    #
-            where: "message"                                                                              #
+      # For example, to only mirror messages from the user "crimilo", you can use:                        #
+      #  1:                                                                                               #
+      #     type: "whitelist"                                                                             #
+      #     keywords:                                                                                     #
+      #        - "crimilo"                                                                                #
+      #     where: "username"                                                                             #
       # ───────────────────────────────────────────────────────────────────────────────────────────────── #
